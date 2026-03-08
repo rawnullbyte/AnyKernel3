@@ -1,30 +1,37 @@
-### AnyKernel3 Ramdisk Mod Script
-## osm0sis @ xda-developers
+# AnyKernel3 Ramdisk Mod Script
+# osm0sis @ xda-developers
 
+## AnyKernel setup
+# begin properties
 properties() { '
-kernel.string=MeowKernel by meowrah
+kernel.string=MeowKernel by Meow
 do.devicecheck=1
 do.modules=0
 do.systemless=0
 do.cleanup=1
-do.cleanuponabort=0
+do.cleanuponabort=1
 device.name1=lisa
-supported.versions=15 - 16
-'; }
+supported.versions=
+supported.patchlevels=
+'; } # end properties
 
-## boot shell variables
-BLOCK=boot;
-IS_SLOT_DEVICE=1;
-RAMDISK_COMPRESSION=auto;
-PATCH_VBMETA_FLAG=auto;
+# shell variables
+block=boot;
+is_slot_device=1;
+ramdisk_compression=auto;
+patch_vbmeta_flag=auto;
+no_block_display=1;
 
-# import functions/variables
+## AnyKernel methods (DO NOT CHANGE)
+# import patching functions/variables - see for reference
 . tools/ak3-core.sh;
 
-## boot install
-# We use split/flash to swap the Image without touching the ramdisk
-split_boot;
-flash_boot;
+# write_boot automatically detects 'Image' and 'dtbo.img' in the zip root
+# and flashes them to the correct partitions.
+ui_print "[#] Installing Kernel and dtbo...";
+dump_boot;
+write_boot;
 
-# uncomment if you have a custom dtbo.img in the zip root
-# flash_dtbo;
+ui_print "[+] Thank you for using MeowKernel!";
+
+## end boot install
